@@ -38,16 +38,10 @@
     matchers.push(/[0-9]{4}([\/\-][0-9]{1,2}){2}( [0-9]{1,2}(:[0-9]{2}){2})?/.source);
     matchers = new RegExp(matchers.join("|"));
     function parseDateString(dateString) {
-        if (dateString instanceof Date) {
-            return dateString;
-        }
+        if (dateString instanceof Date) return dateString;
         if (String(dateString).match(matchers)) {
-            if (String(dateString).match(/^[0-9]*$/)) {
-                dateString = Number(dateString);
-            }
-            if (String(dateString).match(/\-/)) {
-                dateString = String(dateString).replace(/\-/g, "/");
-            }
+            if (String(dateString).match(/^[0-9]*$/)) dateString = Number(dateString);
+            if (String(dateString).match(/\-/)) dateString = String(dateString).replace(/\-/g, "/");
             return new Date(dateString);
         } else {
             throw new Error("Couldn't cast `" + dateString + "` to a date object.");
@@ -77,20 +71,20 @@
             var directives = format.match(/%(-|!)?[A-Z]{1}(:[^;]+;)?/gi);
             if (directives) {
                 for (var i = 0, len = directives.length; i < len; ++i) {
-                    var directive = directives[i].match(/%(-|!)?([a-zA-Z]{1})(:[^;]+;)?/), regexp = escapedRegExp(directive[0]), modifier = directive[1] || "", plural = directive[3] || "", value = null;
+                    var directive = directives[i].match(/%(-|!)?([a-zA-Z]{1})(:[^;]+;)?/),
+                        regexp = escapedRegExp(directive[0]),
+                        modifier = directive[1] || "",
+                        plural = directive[3] || "",
+                        value = null;
                     directive = directive[2];
                     if (DIRECTIVE_KEY_MAP.hasOwnProperty(directive)) {
                         value = DIRECTIVE_KEY_MAP[directive];
                         value = Number(offsetObject[value]);
                     }
                     if (value !== null) {
-                        if (modifier === "!") {
-                            value = pluralize(plural, value);
-                        }
+                        if (modifier === "!") value = pluralize(plural, value);
                         if (modifier === "") {
-                            if (value < 10) {
-                                value = "0" + value.toString();
-                            }
+                            if (value < 10) value = "0" + value.toString();
                         }
                         format = format.replace(regexp, value.toString());
                     }
@@ -104,18 +98,9 @@
         var plural = "s", singular = "";
         if (format) {
             format = format.replace(/(:|;|\s)/gi, "").split(/\,/);
-            if (format.length === 1) {
-                plural = format[0];
-            } else {
-                singular = format[0];
-                plural = format[1];
-            }
+            if (format.length === 1) plural = format[0]; else { singular = format[0]; plural = format[1]; }
         }
-        if (Math.abs(count) > 1) {
-            return plural;
-        } else {
-            return singular;
-        }
+        if (Math.abs(count) > 1) return plural; else return singular;
     }
     var Countdown = function(el, finalDate, options) {
         this.el = el;
@@ -136,61 +121,29 @@
             }
         }
         this.setFinalDate(finalDate);
-        if (this.options.defer === false) {
-            this.start();
-        }
+        if (this.options.defer === false) this.start();
     };
     $.extend(Countdown.prototype, {
         start: function() {
-            if (this.interval !== null) {
-                clearInterval(this.interval);
-            }
+            if (this.interval !== null) clearInterval(this.interval);
             var self = this;
             this.update();
-            this.interval = setInterval(function() {
-                self.update.call(self);
-            }, this.options.precision);
+            this.interval = setInterval(function() { self.update.call(self); }, this.options.precision);
         },
         stop: function() {
             clearInterval(this.interval);
             this.interval = null;
             this.dispatchEvent("stoped");
         },
-        toggle: function() {
-            if (this.interval) {
-                this.stop();
-            } else {
-                this.start();
-            }
-        },
-        pause: function() {
-            this.stop();
-        },
-        resume: function() {
-            this.start();
-        },
-        remove: function() {
-            this.stop.call(this);
-            instances[this.instanceNumber] = null;
-            delete this.$el.data().countdownInstance;
-        },
-        setFinalDate: function(value) {
-            this.finalDate = parseDateString(value);
-        },
+        setFinalDate: function(value) { this.finalDate = parseDateString(value); },
         update: function() {
-            if (this.$el.closest("html").length === 0) {
-                this.remove();
-                return;
-            }
-            var hasEventsAttached = $._data(this.el, "events") !== undefined, now = new Date(), newTotalSecsLeft;
+            if (this.$el.closest("html").length === 0) { this.remove(); return; }
+            var hasEventsAttached = $._data(this.el, "events") !== undefined,
+                now = new Date(), newTotalSecsLeft;
             newTotalSecsLeft = this.finalDate.getTime() - now.getTime();
             newTotalSecsLeft = Math.ceil(newTotalSecsLeft / 1e3);
             newTotalSecsLeft = !this.options.elapse && newTotalSecsLeft < 0 ? 0 : Math.abs(newTotalSecsLeft);
-            if (this.totalSecsLeft === newTotalSecsLeft || !hasEventsAttached) {
-                return;
-            } else {
-                this.totalSecsLeft = newTotalSecsLeft;
-            }
+            if (this.totalSecsLeft === newTotalSecsLeft || !hasEventsAttached) return; else this.totalSecsLeft = newTotalSecsLeft;
             this.elapsed = now >= this.finalDate;
             this.offset = {
                 seconds: this.totalSecsLeft % 60,
@@ -208,12 +161,8 @@
                 totalMinutes: Math.floor(this.totalSecsLeft / 60),
                 totalSeconds: this.totalSecsLeft
             };
-            if (!this.options.elapse && this.totalSecsLeft === 0) {
-                this.stop();
-                this.dispatchEvent("finish");
-            } else {
-                this.dispatchEvent("update");
-            }
+            if (!this.options.elapse && this.totalSecsLeft === 0) { this.stop(); this.dispatchEvent("finish"); }
+            else { this.dispatchEvent("update"); }
         },
         dispatchEvent: function(eventName) {
             var event = $.Event(eventName + ".countdown");
@@ -238,9 +187,29 @@
                 } else {
                     $.error("Method %s does not exist on jQuery.countdown".replace(/\%s/gi, method));
                 }
-            } else {
-                new Countdown(this, argumentsArray[0], argumentsArray[1]);
-            }
+            } else { new Countdown(this, argumentsArray[0], argumentsArray[1]); }
         });
     };
+});
+
+
+
+$(document).ready(function() {
+    var today = new Date();
+    var endDate = new Date(today.getTime() + 23 * 24 * 60 * 60 * 1000);
+    var formattedEndDate = endDate.getFullYear() + '/' + 
+        ('0' + (endDate.getMonth()+1)).slice(-2) + '/' +
+        ('0' + endDate.getDate()).slice(-2) + ' ' +
+        ('0' + endDate.getHours()).slice(-2) + ':' +
+        ('0' + endDate.getMinutes()).slice(-2) + ':' +
+        ('0' + endDate.getSeconds()).slice(-2);
+
+    $('#time').countdown(formattedEndDate, function(event) {
+        $(this).html(
+            '<div class="clock"><span>' + event.offset.totalDays + '</span> <p>Days</p></div>' +
+            '<div class="clock"><span>' + event.offset.hours + '</span> <p>Hours</p></div>' +
+            '<div class="clock"><span>' + event.offset.minutes + '</span> <p>Minutes</p></div>' +
+            '<div class="clock"><span>' + event.offset.seconds + '</span> <p>Seconds</p></div>'
+        );
+    });
 });
