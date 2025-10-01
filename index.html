@@ -45,44 +45,21 @@
 
   <div class="container"></div>
     <h1 class="color-change">Scrabble at the Beach</h1>
-      <p>The place where the Fun is</p>
+      <p style="color: #FCF259; font-size: 19px; padding-bottom: 20px;">Sienna beach is calling...</p>
 
 
       
-      <a href="https://www.scrabbleuganda.com/live-event/UG138/html/A-standings.html" target="_blank" style="background-color: #A6D6D6;padding: 10px; margin: 10px; border-radius: 10px; font-weight: 400px; padding-left: 28px; padding-right: 28px; ">Register</a><a href="" style="background-color: #A6D6D6;padding: 10px; margin: 10px; border-radius: 10px;" > Results Submission </a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScDt0YVusnL9S8Y1QlpmGR98c7t97e_9DYDtLSMuttBbburDw/viewform" target="_blank" style="background-color: #A6D6D6;padding: 10px; margin: 10px; border-radius: 10px; font-weight: 400px; padding-left: 28px; padding-right: 28px; ">Register</a><a href="" style="background-color: #A6D6D6;padding: 10px; margin: 10px; border-radius: 10px;" > Results Submission </a>
       
 
       <div class="watchlive" style="margin-top: 100px">
       <button style="margin-right: 20px; margin-top: 50px; margin-bottom:100px; font-size:25px;background-color:  #A6D6D6; border-radius: 10px;">
-              <span><a href="" target="_blank"> Watch live on YouTube</a></span>
-              <i class="fab fa-youtube" style=" color:red; padding-bottom: 5px;"></i>
+              <span><a href="https://chat.whatsapp.com/IQi3jsxJCUb03W8I7khgMg" target="_blank">Join the WhatsApp community</a></span>
+             <i class="fab fa-whatsapp" style="color: #018f35; padding-bottom: 5px;"></i>
             </button>
 
       </div>
-      <!-- <div class="content grid">
-      ghg
-          <span>ARRIVAL DATE </span> <br>
-          <input type="date" placeholder="29/20/2021">
-        </div>
-        <div class="box">
-          <span>DEPARTURE DATE </span> <br>
-          <input type="date" placeholder="29/20/2021">
-        </div>
-        <div class="box">
-          <span>ADULTS</span> <br>
-          <input type="number" placeholder="01">
-        </div>
-        <div class="box">
-          <span>CHILDREN </span> <br>
-          <input type="number" placeholder="01">
-        </div>
-        <div class="box">
-          <button class="flex1">
-            <span>Check Availability</span>
-            <i class="fas fa-arrow-circle-right"></i>
-          </button>
-        </div>
-      </div> -->
+      
     </div>
     </section>
    
@@ -129,8 +106,10 @@
       <div id="time" class="flex1 mtop"> </div>
     </div>
   </section>
+
   <script src="jquery.countdown.js" charset="utf-8"></script>
   <script src="jquery.countdown.min.js" charset="utf-8"></script>
+  <!--
   <script type="text/javascript">
     $('#time').countdown('2024/01/01', function(event) {
       $(this).html(event.strftime(
@@ -141,6 +120,48 @@
       ));
     });
   </script>
+-->
+
+
+
+
+
+<div id="time" class="flex1 mtop"></div>
+
+<script src="jquery.countdown.js"></script>
+<script src="jquery.countdown.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    // Calculate the end date: today + 28 days
+    var today = new Date();
+    var endDate = new Date(today.getTime() + 23 * 24 * 60 * 60 * 1000); // 28 days in ms
+
+    // Format the date as YYYY/MM/DD for the countdown plugin
+    var year = endDate.getFullYear();
+    var month = ('0' + (endDate.getMonth() + 1)).slice(-2);
+    var day = ('0' + endDate.getDate()).slice(-2);
+    var formattedEndDate = year + '/' + month + '/' + day;
+
+    // Initialize the countdown
+    $('#time').countdown(formattedEndDate, function(event) {
+      $(this).html(event.strftime(
+        '<div class="clock"><span>%d</span> <p>Days</p></div> ' +
+        '<div class="clock"><span>%H</span> <p>Hours</p></div> ' +
+        '<div class="clock"><span>%M</span> <p>Minutes</p></div> ' +
+        '<div class="clock"><span>%S</span> <p>Seconds</p></div> '
+      ));
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
 
  <section class="wrapper2">
     <div class="container">
@@ -149,23 +170,20 @@
         
       </div>
 
-      <div class="content grid mtop">
-        <div class="box" style=" margin-left: 200px;">
-          <!-- <i class="fas fa-shipping-fast"></i> -->
-          <img src="scrabbleUganda.jpeg" alt="" style="padding-top: 50px;">
-          <!-- <h3>Pick Up & Drop</h3> -->
-          <p>Scrabble Association of Uganda</p>
-          <!-- <span class='far fa-long-arrow-alt-right'></span> -->
-          <!-- <span class=''></span> -->
-        </div>
-        <div class="box" style="width:400px;">
-          <!-- <i class="fas fa-shipping-fast"></i> -->
-          <img src="farmvillelogo.jpeg" alt="" style="width: 300px;padding-left: 20px;padding-right: 20px; padding-top: 50px;">
-          <!-- <h3>Pick Up & Drop</h3> -->
-          <p>Farmville Ghee</p>
-          <!-- <span class='far fa-long-arrow-alt-right'></span> -->
-          <!-- <span class=''></span> -->
-        </div>
+    <div class="content grid mtop">
+    <div class="box" style="margin-left: 200px;">
+        <a href="https://www.scrabbleuganda.com/live-event/UG138/html/index.html" target="_blank">
+            <img src="scrabbleUganda.jpeg" alt="" style="padding-top: 10px;">
+        </a>
+        <p>Scrabble Association of Uganda</p>
+    </div>
+
+    <div class="box" style="width:300px;">
+        <a href="https://www.tiktok.com/@farmvilleghee?_t=ZM-90BZeuvNyjA&_r=1" target="_blank">
+            <img src="farmvillelogo.jpeg" alt="" style="width: 300px; padding-left: 20px; padding-right: 20px; padding-top: 10px;">
+        </a>
+        <p>Farmville Ghee</p>
+    </div>
         <!--
          <div class="box" style="width:400px;">
          
@@ -210,6 +228,11 @@
 
 
 </html>
+
+
+
+
+
 
 
 
