@@ -565,7 +565,7 @@ p {
 }
 
 .timer.wrapper {
-  background-image: url("counter-image.png"); 
+  background-image: url("timer-image.jpeg"); 
 }
 
 
@@ -974,3 +974,4 @@ padding: 10px;
     font-size: 14px;
   }
 }
+
